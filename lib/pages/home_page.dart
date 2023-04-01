@@ -8,6 +8,7 @@ import 'package:to_do_app/utils/extensions.dart';
 
 import '../constant/dimens.dart';
 import '../constant/strings.dart';
+import '../view_items/sliver_app_bar_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,46 +31,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context, child) => NestedScrollView(
                 controller: context.read<HomePageBloc>().getScrollController,
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverAppBar(
-                    backgroundColor: Colors.black,
-                    pinned: true,
-                    expandedHeight: sliverAppBarHeight,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          EasyTextWidget(
-                            text: kToDoText,
-                            fontSize: kFZ30,
-                          ),
-                        ],
-                      ),
-                    ),
-                    bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(kSP20x),
-                      child: AppBar(
-                        backgroundColor: Colors.black,
-                        title: Selector<HomePageBloc, bool>(
-                          selector: (_, obj) => obj.getTitleVisibility,
-                          builder: (context, isVisible, _) {
-                            return AnimatedOpacity(
-                              opacity: (isVisible) ? 0 : 1,
-                              duration: const Duration(milliseconds: 500),
-                              child: const EasyTextWidget(
-                                text: kToDoText,
-                                fontSize: kFZ30,
-                              ),
-                            );
-                          },
-                        ),
-                        leading: const Icon(
-                          Icons.menu,
-                          size: kFZ40,
-                        ),
-                      ),
-                    ),
-                  )
+                  const SliverAppBarView()
                 ],
                 body: Container(
                   margin: const EdgeInsets.only(top: kSP50x),
@@ -80,6 +42,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (context, toDoList, _) {
                         return Wrap(spacing: kSP20x, runSpacing: kSP55x, children: [
                           for (int index = 0,length=toDoList.length;index<length ; index++)
+                            ////to do item
                             Card(
                               margin: const EdgeInsets.only(left: kSP10x),
                               // shape: RoundedRectangleBorder(
@@ -218,3 +181,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
